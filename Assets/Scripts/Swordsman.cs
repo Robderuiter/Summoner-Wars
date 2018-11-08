@@ -2,35 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Swordsman : Unit {
+public class Swordsman : Infantry {
 
-	void Awake(){
+	new void Awake(){
 		base.Awake ();
 
 		//defensive stats
-		hp = 100;
-		dodge = 0.1f;
-		block = 0.3f;
-		pDef = 5;
-		mDef = 3;
-		brace = 0;
-		speed = 3f;
+		stats.maxHP = 100;
+		stats.hp = stats.maxHP;
+		stats.dodge = 0.1f;
+		stats.block = 0.3f;
+		stats.pDef = 4;
+		stats.mDef = 3;
+		stats.brace = 0;
+		stats.speed = 1f;
 
 		//offensive stats
-		range = 1f;
-		attsp = 1f;
-		patt = 5;
-		matt = 0;
-		charge = 0;
+		stats.range = 2f;
+		stats.attsp = 20; //currently the amount of frames between each attack
+		stats.patt = 10;
+		stats.matt = 0;
+		stats.charge = 0;
 	}
 
-	// Update is called once per frame
-	void Update () {
-		Walk();
-	}
-
-	public override void Walk(){
-		Vector2 p = new Vector2(0,speed * Time.deltaTime);
-		transform.Translate (p);
+	public override void Attack (){
+		attackTarget.GetDamage (stats.patt);
 	}
 }

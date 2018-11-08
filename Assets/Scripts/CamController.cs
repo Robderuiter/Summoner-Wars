@@ -13,14 +13,16 @@ public class CamController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		target = GameObject.FindWithTag("Player").transform;
+		target = GameObject.Find("Player").transform;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position = new Vector3(target.position.x, target.position.y, -10f);
+		if (target) {
+			transform.position = new Vector3 (target.position.x, target.position.y, -10f);
 
-		CameraZoom ();
+			CameraZoom ();
+		}
 	}
 
 	void CameraZoom (){

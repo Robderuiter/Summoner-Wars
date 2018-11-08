@@ -2,37 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Unit {
+public class Player : Actor {
 
 	GameObject targetPrefab;
+	Vector2 size;
 
-	void Awake(){
+	new void Awake(){
 		base.Awake ();
 
 		//defensive stats
-		hp = 100;
-		dodge = 0.1f;
-		block = 0.3f;
-		pDef = 5;
-		mDef = 3;
-		brace = 0;
-		speed = 3f;
+		stats.maxHP = 100;
+		stats.hp = stats.maxHP;
+		stats.dodge = 0.1f;
+		stats.block = 0.3f;
+		stats.pDef = 5;
+		stats.mDef = 3;
+		stats.brace = 0;
+		stats.speed = 2f;
 
 		//offensive stats
-		range = 1f;
-		attsp = 1f;
-		patt = 5;
-		matt = 0;
-		charge = 0;
+		stats.range = 1f;
+		stats.attsp = 1;
+		stats.patt = 5;
+		stats.matt = 0;
+		stats.charge = 0;
 
-		//temp, swordsman prefab
+		//swordsman prefab
 		targetPrefab = (GameObject) Resources.Load("Swordsman");
+
+		//Debug.Log ("Unit " + gameObject.name + " size is " + spriteR.size);
 	}
 
-	void Update(){
+	new void Update(){
 		if (GetComponent<Rigidbody2D> () != null) {
 			//player walks on user input (wasd)
-			Walk();
+			PlayerWalk();
 
 			//player just looks at mouse all the time
 			Vector2 mouseScrPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -42,18 +46,18 @@ public class Player : Unit {
 		}
 
 		if (Input.GetMouseButtonDown (0)) {
-			Spawn ();
+			Spawn (targetPrefab, this.gameObject);//prefabToSpawn, creatorGameObject
 		}
 	}
 		
-	public override void Walk(){
+	public void PlayerWalk(){
 		Vector2 p =	GetBaseInput();
-		p = p * speed;
+		p = p * stats.speed;
 		p = p * Time.deltaTime;
 		transform.Translate (p);
 	}
 
-	//move cam up/down/left/right
+	//move up/down/left/right
 	private Vector2 GetBaseInput() {
 		Vector2 p_Velocity = new Vector2();
 		if (Input.GetKey (KeyCode.W)){
@@ -69,9 +73,5 @@ public class Player : Unit {
 			p_Velocity += new Vector2(1, 0);
 		}
 		return p_Velocity;
-	}
-
-	void Spawn(){
-		GameObject clone = GameObject.Instantiate(targetPrefab, transform.position, transform.localRotation);
 	}
 }
