@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ranged : Unit {
-
-	public GameObject projectile;
+public class Melee : Unit {
 
 	//set target for aggro if collider doesn't have the same tag as you and you don't already have a target for aggro
 	void OnTriggerEnter2D (Collider2D col){
+		//check if col has another tag than you and you don't already have a target, also ignore projectiles, let em do their thang
 		if (col.gameObject.tag != gameObject.tag && col.gameObject.GetComponent<Projectile>() == null) {
 			Actor colActor = col.gameObject.GetComponent<Actor>();
 
@@ -15,9 +14,8 @@ public class Ranged : Unit {
 				targetsInRange.Add (colActor);
 			}
 
-			if (target == null) {
+			if (target == null){
 				target = colActor;
-				isWalking = false;
 			}
 		}
 	}
@@ -32,7 +30,6 @@ public class Ranged : Unit {
 			}
 
 			if (target == colActor) {
-				isWalking = true;
 				target = null;
 			}
 		}

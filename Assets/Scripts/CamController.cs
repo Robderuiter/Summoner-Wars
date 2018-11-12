@@ -5,7 +5,6 @@ using UnityEngine;
 public class CamController : MonoBehaviour {
 
 	Transform target;
-	int camZoomStart = 10;
 	int camZoomMax = 20;
 	int camZoomMin = 5;
 

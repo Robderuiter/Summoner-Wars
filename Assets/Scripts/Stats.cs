@@ -17,7 +17,8 @@ public class Stats {
 	public float speed;
 
 	//offensive stats
-	public float range; //multiplier to trigger size on init, might need to only have this on weapon :-x
+	public float triggerRange; //multiplier to trigger size on init, currrently edits triggers on start, so = aggroRange
+	public float attackRange;
 	public int attsp; //attack speed
 	public int patt; //physical Attack
 	public int matt; //magical attack

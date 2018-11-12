@@ -14,10 +14,10 @@ public class Actor : MonoBehaviour {
 
 	//ai control stuff
 	public bool isWalking;
-	public bool isAttacking;
+	public bool isBeingTaunted = false;
 	public int lastAttackFrame = 0;
-	public Actor attackTarget;
-	public Transform aggroTarget;
+	public Actor target;
+	public List<Actor> targetsInRange = new List<Actor> ();
 
 	//animation/looks
 	public SpriteRenderer spriteR;
@@ -49,14 +49,14 @@ public class Actor : MonoBehaviour {
 	public void Start(){
 		//modify trigger size by multiplying with range
 		if (trigger) {
-			trigger.radius = stats.range;
+			trigger.radius = stats.triggerRange;
 		}
 	}
 
 	//unity...
 	public void Update(){
 		//unity...
-		if (rb.IsSleeping ()) {
+		if (rb && rb.IsSleeping ()) {
 			rb.WakeUp ();
 		}
 	}
@@ -66,13 +66,26 @@ public class Actor : MonoBehaviour {
 		transform.Translate (p);
 	}
 
-	public void LookAt(Vector2 target){
-		Vector2 direction = (target - (Vector2) transform.position).normalized;
+	public void LookAt(Vector2 targetToLookAt){
+		Vector2 direction = (targetToLookAt - (Vector2) transform.position).normalized;
 		transform.up = direction;
 	}
 
 	public virtual void Attack(){
 		
+	}
+
+	//same for each class, CheckIfViableTarget are the conditions to check for for each ai type/class
+	public void FindNewTarget(){
+		foreach(Actor possibleTarget in targetsInRange){
+			if (CheckIfViableTarget (possibleTarget) == true) {
+				target = possibleTarget;
+			}
+		}
+	}
+
+	public virtual bool CheckIfViableTarget (Actor possibleTarget){
+		return(false);
 	}
 
 	public Actor Spawn(GameObject targetPrefab, GameObject creator){
@@ -82,11 +95,37 @@ public class Actor : MonoBehaviour {
 		return (clone.GetComponent<Actor>());
 	}
 
-	public void GetDamage(int attackerPatt){
-		stats.hp -= Mathf.RoundToInt((float)attackerPatt * 0.1f + ((float)attackerPatt - stats.pDef) * 0.9f);
-		Recolor ();
-		Debug.Log (gameObject.name + " only has " + stats.hp + " out of " + stats.maxHP + " left!");
+	public void GetDamage(int attackerPatt, int attackerMatt){
+		//need to allow dodge first
+		if (Random.Range (0f, 1f) > stats.dodge) {
+			//check if attack has physical att, check for block chance, then do physical damage
+			if (attackerPatt > 0 && Random.Range (0f, 1f) > stats.block) {
+				stats.hp -= Mathf.RoundToInt ((float)attackerPatt * 0.1f + ((float)attackerPatt - stats.pDef) * 0.9f);
+			} 
+			if (attackerPatt < 0) {
+				stats.hp -= Mathf.RoundToInt ((float)attackerPatt * 0.1f + ((float)attackerPatt + stats.pDef) * 0.9f);
+			}
+			//check if attack has magical att, then do magical damage
+			if (attackerMatt > 0) {
+				stats.hp -= Mathf.RoundToInt ((float)attackerMatt * 0.1f + ((float)attackerMatt - stats.mDef) * 0.9f);
+			}
+			if (attackerMatt < 0) {
+				stats.hp -= Mathf.RoundToInt ((float)attackerMatt * 0.1f + ((float)attackerMatt + stats.mDef) * 0.9f);
+			}
 
+			//recolor sprite based on new hp
+			Recolor ();
+		}
+
+		//Debug.Log ("attackerpatt = " + attackerPatt + ", attackermatt = " + attackerMatt);
+		//Debug.Log (gameObject.name + " only has " + stats.hp + " out of " + stats.maxHP + " left!");
+
+		//clamp at max hp
+		if (stats.hp > stats.maxHP) {
+			stats.hp = stats.maxHP;
+		}
+
+		//destroy object if hp <= 0
 		if (stats.hp <= 0) {
 			Destroy (gameObject);
 		}
@@ -96,9 +135,9 @@ public class Actor : MonoBehaviour {
 	public void Recolor (){
 		Color ogColor = spriteR.color;
 		float hpPercent = (float)stats.hp / stats.maxHP;
-		float red = (1 - hpPercent);
-		float green = ogColor.g * hpPercent;
-		float blue = ogColor.b * hpPercent;
+		//float red = (1 - hpPercent);
+		//float green = ogColor.g * hpPercent;
+		//float blue = ogColor.b * hpPercent;
 
 		//Debug.Log ("color before: r=" + red + " g=" + green + " b=" + blue);
 		//spriteR.color = new Color (red,green,blue,1f);

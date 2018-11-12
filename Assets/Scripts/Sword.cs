@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Swordsman : Infantry {
+public class Sword : Melee {
 
 	new void Awake(){
 		base.Awake ();
@@ -18,14 +18,15 @@ public class Swordsman : Infantry {
 		stats.speed = 1f;
 
 		//offensive stats
-		stats.range = 2f;
+		stats.triggerRange = 4f;
+		stats.attackRange = 1.1f;
 		stats.attsp = 20; //currently the amount of frames between each attack
-		stats.patt = 10;
+		stats.patt = 15;
 		stats.matt = 0;
 		stats.charge = 0;
 	}
 
 	public override void Attack (){
-		attackTarget.GetDamage (stats.patt);
+		target.GetDamage (stats.patt, stats.matt);
 	}
 }

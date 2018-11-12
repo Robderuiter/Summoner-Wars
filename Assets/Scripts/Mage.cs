@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Archer : Ranged {
+public class Mage : Ranged {
 
 	new void Awake(){
 		base.Awake ();
@@ -18,20 +18,21 @@ public class Archer : Ranged {
 		stats.speed = 1f;
 
 		//offensive stats
-		stats.triggerRange = 8f;
-		stats.attackRange = 8f;
-		stats.attsp = 200; //currently the amount of frames between each attack
-		stats.patt = 25;
-		stats.matt = 0;
+		stats.triggerRange = 16f;
+		stats.attackRange = 16f;
+		stats.attsp = 400; //currently the amount of frames between each attack
+		stats.patt = 0;
+		stats.matt = 50;
 		stats.charge = 0;
 
 		//get arrow gameobject
-		projectile = (GameObject)Resources.Load("Arrow");
+		projectile = (GameObject)Resources.Load("Fireball");
 	}
 
 	public override void Attack (){
 		Actor clone = Spawn (projectile, this.gameObject); //prefabToSpawn, creatorGameObject
-		clone.GetComponent<Projectile>().stats.patt = stats.patt;
+		clone.GetComponent<Projectile>().stats.matt = stats.matt;
 		clone.GetComponent<Projectile>().target = target;
 	}
+
 }

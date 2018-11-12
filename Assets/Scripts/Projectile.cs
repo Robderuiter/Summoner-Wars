@@ -12,8 +12,12 @@ public class Projectile : Actor {
 	public new void Start(){
 		base.Start ();
 
-		dist = Vector2.Distance (attackTarget.transform.position, transform.position);
+		//determine distance to target and save startpos
+		dist = Vector2.Distance (target.transform.position, transform.position);
 		startPos = transform.position;
+
+		//set size to startHeight
+		transform.localScale = new Vector3 (startHeight, startHeight, 0f);
 	}
 
 	// Update is called once per frame
@@ -27,8 +31,8 @@ public class Projectile : Actor {
 	//set target for aggro if collider doesn't have the same tag as you and you don't already have a target for aggro
 	void OnTriggerEnter2D (Collider2D col){
 		if (col.gameObject.tag != gameObject.tag && !col.isTrigger) {
-			attackTarget = col.gameObject.GetComponent<Actor>();
-			attackTarget.GetDamage (stats.patt);
+			target = col.gameObject.GetComponent<Actor>();
+			target.GetDamage (stats.patt, stats.matt);
 			Destroy (this.gameObject);
 		}
 	}

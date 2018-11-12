@@ -20,12 +20,12 @@ public class Unit : Actor {
 		}
 
 		//look at target if you have one
-		if (aggroTarget) {
-			LookAt (aggroTarget.position);
+		if (target) {
+			LookAt (target.transform.position);
 		}
 
 		//attack target when something enters enters collider
-		if (attackTarget) {
+		if (target && Vector2.Distance(transform.position, target.transform.position) < stats.attackRange) {
 			if (Time.frameCount - lastAttackFrame > stats.attsp) {
 				Attack ();
 				lastAttackFrame = Time.frameCount;

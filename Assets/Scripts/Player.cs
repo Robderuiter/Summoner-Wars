@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Player : Actor {
 
-	GameObject targetPrefab;
-	Vector2 size;
+	//spawn stuff
+	GameObject chosenPrefab;
+	GameObject prefabChoice1;
+	GameObject prefabChoice2;
+	GameObject prefabChoice3;
+	GameObject prefabChoice4;
+	GameObject prefabChoice5;
 
 	new void Awake(){
 		base.Awake ();
@@ -21,16 +26,21 @@ public class Player : Actor {
 		stats.speed = 2f;
 
 		//offensive stats
-		stats.range = 1f;
+		stats.triggerRange = 1f;
+		stats.attackRange = 1f;
 		stats.attsp = 1;
 		stats.patt = 5;
 		stats.matt = 0;
 		stats.charge = 0;
 
 		//swordsman prefab
-		targetPrefab = (GameObject) Resources.Load("Swordsman");
+		chosenPrefab = (GameObject) Resources.Load("Sword");
 
-		//Debug.Log ("Unit " + gameObject.name + " size is " + spriteR.size);
+		prefabChoice1 = (GameObject) Resources.Load("Sword");
+		prefabChoice2 = (GameObject) Resources.Load("Archer");
+		prefabChoice3 = (GameObject) Resources.Load("Mage");
+		prefabChoice4 = (GameObject) Resources.Load("Priest");
+		prefabChoice5 = (GameObject) Resources.Load("Shield");
 	}
 
 	new void Update(){
@@ -41,12 +51,27 @@ public class Player : Actor {
 			//player just looks at mouse all the time
 			Vector2 mouseScrPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			LookAt (mouseScrPos);
-		} else {
-			Debug.Log ("Unit " + gameObject.name + " does not have a RigidBody2D attached to it.");
-		}
+		} 
 
 		if (Input.GetMouseButtonDown (0)) {
-			Spawn (targetPrefab, this.gameObject);//prefabToSpawn, creatorGameObject
+			Spawn (chosenPrefab, this.gameObject);//prefabToSpawn, creatorGameObject
+		}
+
+		//switch chosenPrefab to Spawn() based on keyboard 1-9 input
+		if (Input.GetKeyDown(KeyCode.Alpha1)){
+			chosenPrefab = prefabChoice1;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha2)){
+			chosenPrefab = prefabChoice2;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha3)){
+			chosenPrefab = prefabChoice3;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha4)){
+			chosenPrefab = prefabChoice4;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha5)){
+			chosenPrefab = prefabChoice5;
 		}
 	}
 		

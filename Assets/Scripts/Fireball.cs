@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : Projectile {
-	
+public class Fireball : Projectile {
+
 	new void Awake(){
 		base.Awake ();
 
 		//defensive stats
-		stats.speed = 4f;
+		stats.speed = 3f;
 
-		//offensive stats
+		//used to change collider on Start(), 1x own size
 		stats.triggerRange = 1f;
 	}
 }
