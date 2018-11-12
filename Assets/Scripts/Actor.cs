@@ -15,6 +15,7 @@ public class Actor : MonoBehaviour {
 	//ai control stuff
 	public bool isWalking;
 	public bool isBeingTaunted = false;
+	public bool isBeingHealed = false;
 	public int lastAttackFrame = 0;
 	public Actor target;
 	public List<Actor> targetsInRange = new List<Actor> ();
@@ -73,19 +74,6 @@ public class Actor : MonoBehaviour {
 
 	public virtual void Attack(){
 		
-	}
-
-	//same for each class, CheckIfViableTarget are the conditions to check for for each ai type/class
-	public void FindNewTarget(){
-		foreach(Actor possibleTarget in targetsInRange){
-			if (CheckIfViableTarget (possibleTarget) == true) {
-				target = possibleTarget;
-			}
-		}
-	}
-
-	public virtual bool CheckIfViableTarget (Actor possibleTarget){
-		return(false);
 	}
 
 	public Actor Spawn(GameObject targetPrefab, GameObject creator){

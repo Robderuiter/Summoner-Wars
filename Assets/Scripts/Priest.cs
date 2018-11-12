@@ -29,8 +29,12 @@ public class Priest : Healer {
 	public override void Attack (){
 		target.GetDamage (stats.patt, stats.matt);
 
-		if (target.stats.hp >= target.stats.maxHP){
+		if (target.stats.hp >= target.stats.maxHP) {
 			target.stats.hp = target.stats.maxHP;
+			target.isBeingHealed = true;
+		} else {
+			target.isBeingHealed = false;
+			FindNewTarget ();
 		}
 	}
 }

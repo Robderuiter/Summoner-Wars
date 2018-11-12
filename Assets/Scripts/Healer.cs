@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Healer : Unit {
 
+	public override bool CheckIfViableTarget (Actor possibleTarget){
+		if (possibleTarget.stats.hp < possibleTarget.stats.maxHP && !possibleTarget.isBeingHealed){
+			return(true);
+		}
+		else {
+			return(false);
+		}
+	}
+
 	void OnTriggerEnter2D (Collider2D col){
 		if (col.gameObject.tag == gameObject.tag && col.gameObject.GetComponent<Projectile>() == null) {
 			Actor colActor = col.gameObject.GetComponent<Actor>();

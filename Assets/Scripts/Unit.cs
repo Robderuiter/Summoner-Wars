@@ -32,4 +32,19 @@ public class Unit : Actor {
 			}
 		}
 	}
+
+	//same for each class, CheckIfViableTarget are the conditions to check for for each ai type/class
+	public void FindNewTarget(){
+		foreach(Actor possibleTarget in targetsInRange){
+			if (CheckIfViableTarget (possibleTarget) == true) {
+				target = possibleTarget;
+			}
+		}
+	}
+
+	public virtual bool CheckIfViableTarget (Actor possibleTarget){
+		//every function needs a return path:P this base never gets called so it doesnt matter xD
+		return(false);
+	}
+
 }
