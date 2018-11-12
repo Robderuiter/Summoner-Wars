@@ -24,7 +24,7 @@ public class Unit : Actor {
 			LookAt (target.transform.position);
 		}
 
-		//attack target when something enters enters collider
+		//attack target when distance is close enough
 		if (target && Vector2.Distance(transform.position, target.transform.position) < stats.attackRange) {
 			if (Time.frameCount - lastAttackFrame > stats.attsp) {
 				Attack ();
@@ -43,8 +43,8 @@ public class Unit : Actor {
 	}
 
 	public virtual bool CheckIfViableTarget (Actor possibleTarget){
-		//every function needs a return path:P this base never gets called so it doesnt matter xD
-		return(false);
+		//every function needs a return path:P this base doesnt get overwritten bij Melee or Ranged (yet?)
+		return(true);
 	}
 
 }

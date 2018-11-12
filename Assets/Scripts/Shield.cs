@@ -18,7 +18,7 @@ public class Shield : Tank {
 
 		//offensive stats
 		stats.triggerRange = 4f;
-		stats.attackRange = 4f;
+		stats.attackRange = 2f;
 		stats.attsp = 100; //currently the amount of frames between each attack
 		stats.patt = 0;
 		stats.matt = 0;
@@ -28,11 +28,12 @@ public class Shield : Tank {
 	public override void Attack (){
 		if (target.target != this){// && !target.isBeingTaunted) {
 			target.target = this;
-			target.isBeingTaunted = true;
+			//target.isBeingTaunted = true;
+			isWalking = false;
 		} else {
-			target.isBeingTaunted = false;
+			//target.isBeingTaunted = false;
 			FindNewTarget ();
+			isWalking = true;
 		}
-
 	}
 }

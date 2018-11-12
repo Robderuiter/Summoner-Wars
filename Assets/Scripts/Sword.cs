@@ -28,5 +28,6 @@ public class Sword : Melee {
 
 	public override void Attack (){
 		target.GetDamage (stats.patt, stats.matt);
+
 	}
 }

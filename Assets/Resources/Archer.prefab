@@ -61,7 +61,7 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!58 &58945447207835658
@@ -115,6 +115,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2afa321fc40464f9c4d6d4b8555801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats:
+    hp: 0
+    maxHP: 0
+    dodge: 0
+    block: 0
+    pDef: 0
+    mDef: 0
+    brace: 0
+    speed: 0
+    triggerRange: 0
+    attackRange: 0
+    attsp: 0
+    patt: 0
+    matt: 0
+    charge: 0
+  rb: {fileID: 0}
+  trigger: {fileID: 0}
+  col: {fileID: 0}
+  isWalking: 0
+  isBeingTaunted: 0
+  isBeingHealed: 0
+  lastAttackFrame: 0
+  target: {fileID: 0}
+  targetsInRange: []
+  spriteR: {fileID: 0}
+  projectile: {fileID: 0}
 --- !u!212 &212617241946202064
 SpriteRenderer:
   m_ObjectHideFlags: 1

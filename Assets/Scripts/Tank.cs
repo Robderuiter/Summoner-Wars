@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tank : Unit {
 
 	public override bool CheckIfViableTarget (Actor possibleTarget){
-		if (possibleTarget.target != this && !possibleTarget.isBeingTaunted){
+		if (possibleTarget.target != this){ // && !possibleTarget.isBeingTaunted){
 			return(true);
 		}
 		else {

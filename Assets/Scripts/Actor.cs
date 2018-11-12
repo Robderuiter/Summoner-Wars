@@ -57,14 +57,19 @@ public class Actor : MonoBehaviour {
 	//unity...
 	public void Update(){
 		//unity...
+		/*
 		if (rb && rb.IsSleeping ()) {
 			rb.WakeUp ();
 		}
+		*/
 	}
 
 	public void WalkForward (){
 		Vector2 p = new Vector2(0,stats.speed * Time.deltaTime);
 		transform.Translate (p);
+
+		//@@ better performance
+		//rb.AddForce (transform.up * 1);
 	}
 
 	public void LookAt(Vector2 targetToLookAt){
@@ -80,6 +85,7 @@ public class Actor : MonoBehaviour {
 		Vector2 spawnPos = transform.position + transform.up * spriteR.size.y; //@@ can change to x on purpose: its wider, to avoid collider triggering
 		GameObject clone = GameObject.Instantiate(targetPrefab, spawnPos, transform.rotation);
 		clone.tag = creator.tag;
+		clone.GetComponent<SpriteRenderer> ().color = spriteR.color;
 		return (clone.GetComponent<Actor>());
 	}
 

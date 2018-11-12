@@ -21,7 +21,7 @@ public class Archer : Ranged {
 		stats.triggerRange = 8f;
 		stats.attackRange = 8f;
 		stats.attsp = 200; //currently the amount of frames between each attack
-		stats.patt = 25;
+		stats.patt = 100;
 		stats.matt = 0;
 		stats.charge = 0;
 

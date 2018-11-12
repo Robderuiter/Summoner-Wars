@@ -43,6 +43,12 @@ public class Player : Actor {
 		prefabChoice5 = (GameObject) Resources.Load("Shield");
 	}
 
+	new void Start(){
+		base.Start ();
+
+		spriteR.color = new Color (1,0,0.3f,1);;
+	}
+
 	new void Update(){
 		if (GetComponent<Rigidbody2D> () != null) {
 			//player walks on user input (wasd)

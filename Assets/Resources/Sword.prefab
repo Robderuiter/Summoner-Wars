@@ -61,7 +61,7 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!58 &58076570997263096
@@ -124,7 +124,8 @@ MonoBehaviour:
     mDef: 0
     brace: 0
     speed: 0
-    range: 0
+    triggerRange: 0
+    attackRange: 0
     attsp: 0
     patt: 0
     matt: 0
@@ -133,10 +134,11 @@ MonoBehaviour:
   trigger: {fileID: 0}
   col: {fileID: 0}
   isWalking: 0
-  isAttacking: 0
+  isBeingTaunted: 0
+  isBeingHealed: 0
   lastAttackFrame: 0
-  attackTarget: {fileID: 0}
-  aggroTarget: {fileID: 0}
+  target: {fileID: 0}
+  targetsInRange: []
   spriteR: {fileID: 0}
 --- !u!212 &212933213399260848
 SpriteRenderer:
